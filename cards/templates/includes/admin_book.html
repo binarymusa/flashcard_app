@@ -1,0 +1,59 @@
+{% extends 'includes/base2.html' %}
+{% block title %}
+    admin_page
+{% endblock %}
+
+{% block content %}
+
+<div class="row d-flex text-white text-center container-fluid mx-auto">
+
+    <div class="col-lg-6 sm-positon border-end" >
+        <h4 class="mt-3-sm">Users Database</h4>
+
+        <div class="container-fluid overflow-x-auto ">
+            <table class="container w-75 m-auto" style="background-color: none;" id="tbl">
+                <thead>
+                    <tr>
+                        <th>User_Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in user_data %}
+                    {% include 'includes/user_del.html' %}
+                    <tr class="text-center">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td> <small>{{ user.email }}</small></td>
+                        <td>
+                            <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal"
+                                data-bs-target="#deleteUserModal{{user.id}}">
+                                <small>Delete</small>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="mt-2">
+                <button type="button" class="btn btn-secondary disabled mb-2" id="addUser">
+                    Add user
+                </button>
+            </div>
+        </div>  
+    </div>
+
+    <div class="col-lg-6 overflow-x-auto-md overflow-y-scroll  align-content-cente" id="veh" style="left: 0;">
+        <h4 class="mt-3-sm">Topic Cards</h4>
+        <div class="">   
+            <div class="text- px-3 text-center border rounded m-auto" style="width: fit-content; background:rgb(117, 101, 7); cursor: pointer" title="no topics">!</div>
+        </div>
+      
+    </div>
+</div>
+</body>
+
+{% endblock %}

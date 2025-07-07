@@ -1,0 +1,16 @@
+{% extends 'includes/base.html' %}
+{% block title %}review_page{% endblock %}
+
+{% block content %}
+    <div class="position- top-0 start-0 end-0 bottom-0 justify-content-center my-5" >
+        <div class="chat-content w-50 m-auto text-white rounded p-2" style="background: #36383b;">
+            <h5><small>Chat AI</small></h5>
+            <div class="messages" id="chatMessages"></div>
+            <input class="border-0" style="background: #36383b; color: #999aa5" type="text" placeholder="Ask me anything..." id="chatInput">
+            <button type="button" class="btn bg-secondary text-white" id="sendMessage"><small>Send</small></button>
+        </div>
+
+        <div><p><div class="text- px-3 text-center rounded m-auto text-white" style="width: fit-content; background:#756507; cursor: pointer; border: 1px solid #dbdada" title="Pending development...">!</div></p></div>
+    </div>
+    
+{% endblock %}

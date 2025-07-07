@@ -1,0 +1,149 @@
+{% extends 'includes/base.html' %}
+{% block title %}review_page{% endblock %}
+
+{% block content %}
+    <div class="review-content mt-2 mx-auto overflow-x-auto" style="height: fit-content;width: 90%">
+        <h4 style="color:white"><small>Study Cards</small></h4>
+        <del class="text-success"><P class="text-success">Generate AI topic summary using the chat button
+            <button class="btn px-2 py-0" title="generate AI topic summary" type="button" id="aicht1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                </svg>
+            </button> </P></del>
+        <div class="difficulty-columns color-white d-lg-flex">
+            <div class="difficulty-column beginner-column" style="height: fit-content;">
+                <div class="row">
+                    <div class="col-lg-10 text-white "><h5>Beginner</h5><hr></div>
+                    <div class="col-lg-2 text-end" title="filter" style="cursor:pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter rounded " viewBox="0 0 16 16" id="fltr">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                        </svg>
+                    </div> 
+                </div>                              
+                
+                <div class="card-container text-white p-1" id="beginnerCards">
+                    {% if not topics_data['beginner'] %}
+                        <div class="text- px-3 text-center rounded m-auto" style="width: fit-content; background:rgb(117, 101, 7); cursor: pointer; border: 1px solid #dbdada" title="no topics">!</div>
+                    {% else %}                    
+                        {% for topic in topics_data['beginner'] %}  
+                            {% include 'includes/review_mdl.html'%}                                                     
+                            <div class="row rounded" id="itm-grp"> 
+                                <div class="col-lg-5" style="width: fit-content;">
+                                    <button type="button" class="btn text-start" data-bs-toggle="modal" data-bs-target="#reviwContentModal{{topic.id}}" style="color: #617bff;">
+                                        {{topic.title}}
+                                    </button>                                       
+                                </div>  
+                                <div class="col-lg-1" style="width: fit-content;">
+                                    <button class="btn mt-3 px-2 py-0 ai-btn" title="AI summary" type="button" onclick="getAISummary('{{topic.id}}', '{{topic.title}}')" data-bs-toggle="modal" data-bs-target="#chatAIModal{{topic.id}}" id="aicht">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="text-white rounded mt-3" id="ctg">{{topic.category}} </div> 
+                                <div class="col-1 rounded py-2" style="width: fit-content;">
+                                    <button class="btn mt-2 p-0 " title="delete"  type="button" data-bs-toggle="modal" data-bs-target="#delTopicModal{{topic.id}}" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#b83e3e" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                    </button>                                    
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+               
+            </div>
+
+            <div class="difficulty-column intermediate-column" style="height: fit-content;">
+                <div class="row">
+                    <div class="col-lg-10 text-white text-center"><h5>Intermediate</h5> <hr></div>
+                    <div class="col-lg-2 text-end" title="filter" style="cursor:pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter rounded" viewBox="0 0 16 16" id="fltr">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                        </svg>
+                    </div> 
+                </div>
+                
+                <div class="card-container text-white" id="intermediateCards">
+                    {% if not topics_data['intermediate'] %}
+                        <div class="text- px-3 text-center rounded m-auto" style="width: fit-content; background:rgb(117, 101, 7); cursor: pointer; border: 1px solid #dbdada" title="no topics">!</div>
+                    {% else %}                    
+                        {% for topic in topics_data['intermediate'] %}   
+                            {% include 'includes/review_mdl.html'%}                     
+                            <div class="row p-auto rounded" id="itm-grp" > 
+                                <div class="col-lg-5" style="width: fit-content;">
+                                    <button type="button" class="btn text-start" data-bs-toggle="modal" data-bs-target="#reviwContentModal{{topic.id}}" style="color: #617bff;">
+                                        {{topic.title}}
+                                    </button> 
+                                </div>  
+                                <div class="col-lg-1 " style="width: fit-content;">
+                                    <button class="btn mt-3 px-2 py-0 ai-btn" title="AI summary" type="button" onclick="getAISummary('{{topic.id}}', '{{topic.title}}')" data-bs-toggle="modal" data-bs-target="#chatAIModal{{topic.id}}" id="aicht">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="text-white col-lg-5 rounded mt-3" id="ctg">{{topic.category}}</div> 
+                                <div class="col-lg-1 rounded" >
+                                    <button class="btn mt-2" title="delete"  type="button" data-bs-toggle="modal" data-bs-target="#delTopicModal{{topic.id}}" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#b83e3e" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                    </button>                                    
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="difficulty-column advanced-column" style="height: fit-content;">
+                <div class="row">
+                    <div class="col-lg-2 text-end rounded" title="filter" style="cursor:pointer" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-filter rounded" viewBox="0 0 16 16" id="fltr">
+                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                        </svg>
+                    </div> 
+                    <div class=" col-lg-10 text-white text-end"><h5>Advanced</h5><hr></div>                    
+                </div> 
+
+                <div class="card-container text-white p-1" id="advancedCards">
+                    {% if not topics_data['advanced'] %}
+                        <div class="text- px-3 text-center rounded m-auto" style="width: fit-content; background:rgb(117, 101, 7); cursor: pointer ;border: 1px solid #dbdada" title="no topics">!</div>
+                    {% else %}                    
+                        {% for topic in topics_data['advanced'] %} 
+                            {% include 'includes/review_mdl.html'%}                           
+                            <div class="row rounded" id="itm-grp"> 
+                                <div class="col-lg-5" style="width: auto;">
+                                    <button type="button" class="btn text-start" data-bs-toggle="modal" data-bs-target="#reviwContentModal{{topic.id}}" style="color: #617bff;">
+                                        {{topic.title}}                                       
+                                    </button> 
+                                </div>  
+                                <div class="col-lg-1" style="width: fit-content;">
+                                    <button class="btn mt-3 px-2 py-0 ai-btn" title="AI summary" type="button" onclick="getAISummary('{{topic.id}}', '{{topic.title}}')" data-bs-toggle="modal" data-bs-target="#chatAIModal{{topic.id}}" id="aicht">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="text-white col-lg-5 rounded  mt-3" id="ctg">{{topic.category}}</div> 
+                                <div class="col-lg-1 rounded py-2">
+                                    <button class="btn mt-2 p-0" title="delete"  type="button" data-bs-toggle="modal" data-bs-target="#delTopicModal{{topic.id}}" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#b83e3e" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                        
+                                    </button>                                    
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

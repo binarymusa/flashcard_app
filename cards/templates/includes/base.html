@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="">
+        <title>
+            {% block title %}
+                Base _page
+            {% endblock %}
+        </title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mediaquery.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+        
+    </head>
+
+    <body  style="background-color: #292a2d;font-size: 15px">
+        {% if current_user.is_authenticated %}
+            <nav class="mb-2 m-auto rounded-3" style="background: #212327; width: 95%;">
+                
+                <div class="nav-itms mt-2 m-auto text-white p-2 row">
+                    <div class="col-2 " style="color: #abb2bd; font-size: 20px; font-weight: 700">STUDYSTACK</div>
+                   <div class="col-lg-8">
+                        <a href="{{url_for('study.review_topic')}}">Review</a>
+                        <a href="{{url_for('study.create_topic')}}">Create</a>
+                        <a href="{{url_for('study.study_stats')}}">Stats</a>
+                        <a href="{{url_for('study.chat_AI')}}">Chat</a>                        
+                   </div>                         
+                    
+                    <div class="col-lg-2 justify-content-end align-content-end text-end rounded-3">
+                        <a href="{{url_for('auth.logout')}}" id="logoutbtn" title="Logout">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="white" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                            </svg>
+                        </a>
+                       
+                    </div>
+                </div>
+                
+            </nav>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} m-auto" style="width: fit-content; z-index: 100;">
+                        <button type="button" class="m1-2 close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <main class="font-monospace ">
+            {% block content %} {% endblock %}
+        </main>
+
+        <script src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='javascript/message.js') }}"></script>
+        <script src="{{ url_for('static', filename='javascript/profile.js') }}"></script>
+        <script src="{{ url_for('static', filename='javascript/app.js') }}"></script>
+        <script src="{{ url_for('static', filename='javascript/indexT.js') }}"></script>
+        <script src="{{ url_for('static', filename='javascript/aiTxt.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>       
+    </body>
+
+</html>
